@@ -165,9 +165,6 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 		// Add resource manually (clicking).
 		$scope.addClick = gameFactory.clickAddResource;
 
-		// Add resource every second (interval).
-		$scope.addScore = $interval(gameFactory.intervalAddResource, 1000);
-
 		// Return a current stat.
 		$scope.getResource = gameFactory.getMyResource;
 
@@ -175,6 +172,12 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 		$scope.buyEvolutionUpg = gameFactory.buyEvolutionUpg;
 		$scope.buyBroodUpg = gameFactory.buyBroodUpg;
 		$scope.buyUpgrade = gameFactory.buyUpgrade;
+
+		// Add resource every second (interval).
+		addInterval = function () {
+			gameFactory.intervalAddResource('food', 'fps');
+		}
+		$interval(addInterval, 1000);
 
 	}
 ]);
