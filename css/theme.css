@@ -1,0 +1,145 @@
+/* CSS Document */
+html {
+	overflow-y: scroll;
+	overflow-x: hidden;
+}
+body {
+	height: 100%;
+	width: 100%;
+	background-color: #414141;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: -moz-none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	font-family: 'sciflysans','Arial Black', sans-serif;
+}
+.nav, .pagination, .panel-title a {
+    cursor: pointer;
+}
+#wrapper {
+	display: table;
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	padding-bottom: 20px;
+	background-color: #414141;
+}
+.tooltipster-spider {
+	border-radius: 5px;
+	border: 1px solid #4c4c4c;
+	background: #4c4c4c;
+	color: #bfbfbf;
+}
+.tooltipster-spider .tooltipster-content {
+	font-size: 14px;
+	line-height: 16px;
+	padding: 8px 10px;
+	white-space: pre-wrap;
+}
+.list-group-item:first-child, .btn {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.list-group-item:last-child, .btn {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+.list-group {
+	margin-bottom: 0;
+}
+.list-group-item {
+	border-color: #FFF;
+	background-color: #414141;
+	cursor: pointer;
+}
+a.list-group-item:hover {
+	background-color: #515151;
+}
+
+.oText {
+	font-size: 24px;
+	color: #000;
+	line-height: 0;
+}
+.tText {
+	font-size: 24px;
+	color: #FFF;
+	line-height: 20px;
+}
+.cText {
+	font-size: 12px;
+	font-weight: 100;
+	color: #CCC;
+	line-height: 20px;
+}
+
+.nav-tabs.nav-justified > li > a{
+	border: 0;
+	cursor: pointer;
+	color: #CCC;
+}
+.nav-tabs.nav-justified > li.active > a {
+	color: #414141;
+}
+.nav-tabs > li > a:hover{
+	background-color: #515151;
+}
+
+.navbar-btn, #addFoodButton {
+	border: 1px solid #000;
+}
+.navbar-btn:hover, #addFoodButton:hover {
+	background-color: #CCC;
+}
+
+#menu {
+	margin-bottom: 0;
+}
+#scoreContainer {
+	font-size: 32px;
+	font-family: 'spookyspiders','Arial Black', sans-serif;
+}
+#addFoodButton {
+	margin-left: auto;
+	margin-right: auto;
+	width: 250px;
+	height: 250px;
+	line-height: 250px;
+	font-size: 24px;
+	color: #999;
+	cursor: pointer;
+}
+#clickMe:hover {
+	background-size: 250px;
+	font-size: 26px;
+}
+.upTitle {
+	color: #999;
+	margin-top: 0;
+	margin-bottom: 0;
+	padding: 10px;
+}
+#base {
+	background-color: #999;
+	margin-bottom: 0;
+}
+#saveResult {
+	margin-right: 20px;
+}
+.achievement {
+	width: 63px;
+	height: 63px;
+	background-color: #FFF;
+	display: block;
+}
+@font-face {
+	font-family: 'sciflysans';
+	src: url(../fonts/sciflysans.ttf);
+}
+@font-face {
+	font-family: 'spookyspiders';
+	src: url(../fonts/spookyspiders.ttf);
+}
