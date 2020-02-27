@@ -12,7 +12,9 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"costType": "food",
 						"initCost": 10,
 						"add": {"fpc": 1},
-						"requirement": "none"
+						"requirement": function () {
+							return true;
+						}
 					},
 					{// 0.1
 						"id": "brood_cobwebSpider",
@@ -21,7 +23,9 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"costType": "food",
 						"initCost": 25,
 						"add": {"fpc": 1},
-						"requirement": "none"
+						"requirement": function () {
+							return true;
+						}
 					},
 					{// 0.2
 						"id": "brood_crabSpider",
@@ -31,8 +35,7 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"initCost": 50,
 						"add": {"fpc": 5},
 						"requirement": function () {
-							// Camouflage
-							return collection.evolutionUpg[0].owned === 1;
+							return collection.broodUpg[0].items[0].owned >= 1;
 						}
 					},
 					{// 0.3
@@ -43,8 +46,7 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"initCost": 100,
 						"add": {"fpc": 10},
 						"requirement": function () {
-							// Night vision
-							return collection.evolutionUpg[6].owned === 1;
+							return false;
 						}
 					},
 					{
@@ -55,7 +57,9 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"costType": "food",
 						"initCost": 200,
 						"add": { "fpc": 20 },
-						"requirement": "none"
+						"requirement": function () {
+							return false;
+						}
 					}
 				]
 			},
@@ -70,8 +74,7 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"initCost": 100,
 						"add": {"fps": 1},
 						"requirement": function () {
-							// Spinnerets
-							return collection.evolutionUpg[2].owned === 1;
+							return false;
 						}
 					},
 					{// 1.1
@@ -81,7 +84,9 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"costType": "food",
 						"initCost": 200,
 						"add": { "fps": 2 },
-						"requirement": "none"
+						"requirement": function () {
+							return false;
+						}
 					}
 				]
 			},
@@ -94,7 +99,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"description": "Security and nutrients. Silk is important.",
 						"costType": "food",
 						"initCost": 1000000,
-						"add": {"sps": 1}
+						"add": { "sps": 1 },
+						"requirement": function () {
+							return true;
+						}
 					},
 					{// 2.1
 						"id": "brood_enhancedSilk",
@@ -102,7 +110,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"description": "This silk is enhanced with special proteins.",
 						"costType": "food",
 						"initCost": 10000000,
-						"add": {"sps": 5}
+						"add": { "sps": 5 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.2
 						"id": "brood_richSilk",
@@ -110,7 +121,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"description": "This silk is rich with strength and elasticity. It's also healthy to eat!",
 						"costType": "food",
 						"initCost": 50000000,
-						"add": {"sps": 20}
+						"add": { "sps": 20 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.3
 						"id": "brood_skinThread",
@@ -119,7 +133,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"providing it with protection",
 						"costType": "food",
 						"initCost": 100000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.4
 						"id": "brood_vascularThread",
@@ -128,7 +145,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"allow a stream of food to flow directly to each spiderling",
 						"costType": "food",
 						"initCost": 200000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.5
 						"id": "brood_muscularThread",
@@ -137,7 +157,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"This allows your nest to move!",
 						"costType": "food",
 						"initCost": 500000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.6
 						"id": "brood_boneThread",
@@ -146,7 +169,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"Not only does it provide further security, but it can be moved with the muscular threads!",
 						"costType": "food",
 						"initCost": 650000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.7
 						"id": "brood_nerveThread",
@@ -155,7 +181,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"It allows your spiderlings to effectively communicate with one another",
 						"costType": "food",
 						"initCost": 800000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					},
 					{// 2.8
 						"id": "brood_sentience",
@@ -164,14 +193,16 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 							"react so well that the nest itself is essentially alive",
 						"costType": "food",
 						"initCost": 1000000000,
-						"add": {"sps": 1000}
+						"add": { "sps": 1000 },
+						"requirement": function () {
+							return false;
+						}
 					}
 				]
 			}
 		];
 
-		// Evolution
-		collection.evolutionUpg = [
+		collection.evolutionUpg = [ //Evolution
 			{// 0
 				"id": "evo_spiderCamo",
 				"title": "Spider camo",
@@ -179,8 +210,8 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 					"Increase grass spider FPC by 1 + Unlocks Crab Spiders",
 				"costType": "food",
 				"initCost": 100,
+				"add": { "fpc": 1 },
 				"requirement": function () {
-					// Grass spiders
 					return collection.broodUpg[0].items[0].owned >= 1;
 				}
 			},
@@ -191,7 +222,9 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 					"Increases spider FPC by 1%",
 				"costType": "food",
 				"initCost": 10000,
-				"requirement": "none"
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 2
 				"id": "evo_spinnerets",
@@ -199,7 +232,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 				"description": "Learn how to use those spinnerets!\n" +
 					"Increases Exp.S FPC by 1 + Unlocks Broken Webs",
 				"costType": "food",
-				"initCost": 200
+				"initCost": 200,
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 3
 				"id": "evo_webPlacement",
@@ -207,7 +243,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 				"description": "Get better at picking locations for webs.\n" +
 					"Increases web FPS by 1%",
 				"costType": "food",
-				"initCost": 10000
+				"initCost": 10000,
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 4
 				"id": "evo_stickyWebs",
@@ -215,7 +254,10 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 				"description": "Start producing sticky fluids on all of your webs.\n" +
 					"Increases web FPS by 1%",
 				"costType": "food",
-				"initCost": 30000
+				"initCost": 30000,
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 5
 				"id": "evo_softerSilk",
@@ -223,27 +265,39 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 				"description": "Soft silk inside the nest keeps spiderlings happy!\n" +
 					"Increases nest SPS by 1%",
 				"costType": "food",
-				"initCost": 30000
+				"initCost": 30000,
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 6
 				"id": "evo_nightVision",
 				"title": "Night vision",
 				"description": "Hunting at night is great, but it gets better with sight!\n" +
-					"Increase Exp.S FPC by 2 + Unlocks Wolf Spiders"
+					"Increase Exp.S FPC by 2 + Unlocks Wolf Spiders",
+				"requirement": function () {
+					return false;
+				}
 			},
 			{// 7
 				"id": "evo_hydrophobicHairs",
 				"title": "Hydrophobic hairs",
 				"description": "These hairs allow spiders to walk on water and even survive beneath the surface.\n" +
-					"Increase Exp.S FPC by 3 + Unlocks Fishing Spiders"
+					"Increase Exp.S FPC by 3 + Unlocks Fishing Spiders",
+				"requirement": function () {
+					return false;
+				}
 			}
 		];
 
-		collection.achievement = [ // Achievement
+		collection.achievement = [ //Achievement
 			{// 0
 				"id": "achieve_motherSpider",
 				"title": "Mother of spiders.",
-				"description": "Spawned your first spider."
+				"description": "Spawned your first spider.",
+				"requirement": function () {
+					return collection.broodUpg[0].items[0].owned >= 1;
+				}
 			}
 		];
 		return collection;

@@ -56,7 +56,7 @@
 						<div class="list-group">
 							<a class="list-group-item clearfix"
 							   data-ng-repeat="upg in broodType.items"
-							   data-ng-show="upg.requirement"
+							   data-ng-show="upg.requirement()"
 							   data-ng-click="buyUpgrade(upg, upg.costType, buyBroodUpg)"
 							   data-ng-mouseenter="upgTooltip('#broodDescription', upg)"
 							   data-ng-mouseleave="hideTooltip('#broodDescription')"
@@ -78,7 +78,7 @@
 				<div class="list-group">
 					<a class="list-group-item clearfix"
 					   data-ng-repeat="evo in evolutionUpg"
-					   data-ng-show="evo.requirement"
+					   data-ng-show="evo.requirement()"
 						 data-ng-click="buyUpgrade(evo, evo.costType)"
 						 data-ng-mouseenter="upgTooltip('#evolutionDescription', evo)"
 						 data-ng-mouseleave="hideTooltip('#evolutionDescription')">

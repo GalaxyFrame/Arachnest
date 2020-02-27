@@ -48,6 +48,8 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "collectionFactory", "statF
 					return requireTarget >= requireValue;
 				} else if (requireCompare === "greater") {
 					return requireTarget > requireValue;
+				} else if (requireCompare === "lesser") {
+					return requireTarget < requireValue;
 				}
 			}
 		};
@@ -148,6 +150,7 @@ ARACHNEST.factory("styleFactory", ["functionFactory",
 	}
 ]);
 
+//Set the stage, this is what gets passed to the main page
 ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory", "gameFactory",
 	function ($scope, $interval, collectionFactory, gameFactory) {
 
@@ -156,8 +159,6 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 
 		$scope.initializeCost = gameFactory.initializeCost;
 		$scope.initializeItem = gameFactory.initializeItem;
-
-		$scope.checkRequirement = gameFactory.checkRequirement;
 		
 		// Return the calculated total rate at which a resource is gathered.
 		$scope.recalcRate = gameFactory.getRecalculateRate;
