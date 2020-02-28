@@ -204,89 +204,97 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 
 		collection.evolutionUpg = [ //Evolution
 			{// 0
-				"id": "evo_spiderCamo",
-				"title": "Spider camo",
-				"description": "Evolve camouflage, allowing your spiders to more easily capture prey.\n" +
-					"Increase grass spider FPC by 1 + Unlocks Crab Spiders",
-				"costType": "food",
-				"initCost": 100,
-				"add": { "fpc": 1 },
-				"requirement": function () {
-					return collection.broodUpg[0].items[0].owned >= 1;
-				}
-			},
-			{// 1
-				"id": "evo_betterSenses",
-				"title": "Better senses",
-				"description": "Evolve better senses on all of your spiders.\n" +
-					"Increases spider FPC by 1%",
-				"costType": "food",
-				"initCost": 10000,
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 2
-				"id": "evo_spinnerets",
-				"title": "Spinnerets",
-				"description": "Learn how to use those spinnerets!\n" +
-					"Increases Exp.S FPC by 1 + Unlocks Broken Webs",
-				"costType": "food",
-				"initCost": 200,
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 3
-				"id": "evo_webPlacement",
-				"title": "Web placement",
-				"description": "Get better at picking locations for webs.\n" +
-					"Increases web FPS by 1%",
-				"costType": "food",
-				"initCost": 10000,
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 4
-				"id": "evo_stickyWebs",
-				"title": "Sticky webs",
-				"description": "Start producing sticky fluids on all of your webs.\n" +
-					"Increases web FPS by 1%",
-				"costType": "food",
-				"initCost": 30000,
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 5
-				"id": "evo_softerSilk",
-				"title": "Softer silk",
-				"description": "Soft silk inside the nest keeps spiderlings happy!\n" +
-					"Increases nest SPS by 1%",
-				"costType": "food",
-				"initCost": 30000,
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 6
-				"id": "evo_nightVision",
-				"title": "Night vision",
-				"description": "Hunting at night is great, but it gets better with sight!\n" +
-					"Increase Exp.S FPC by 2 + Unlocks Wolf Spiders",
-				"requirement": function () {
-					return false;
-				}
-			},
-			{// 7
-				"id": "evo_hydrophobicHairs",
-				"title": "Hydrophobic hairs",
-				"description": "These hairs allow spiders to walk on water and even survive beneath the surface.\n" +
-					"Increase Exp.S FPC by 3 + Unlocks Fishing Spiders",
-				"requirement": function () {
-					return false;
-				}
+				"items": [
+					{// evolutionUpg[0].items[0]
+						"id": "evo_spiderCamo",
+						"title": "Spider camo",
+						"description": "Evolve camouflage, allowing your spiders to more easily capture prey.\n" +
+							"Increase grass spider FPC by 1 + Unlocks Crab Spiders",
+						"costType": "food",
+						"initCost": 100,
+						"evolve": function () {
+							collection.broodUpg[0].items[0].add.fpc += 1;
+						},
+						"requirement": function () {
+							//At least one grass spider owned and this upgrade not already purchased
+							return (collection.broodUpg[0].items[0].owned >= 1)
+								&& (collection.evolutionUpg[0].items[0].owned < 1);
+						}
+					},
+					{// evolutionUpg[0].items[1]
+						"id": "evo_betterSenses",
+						"title": "Better senses",
+						"description": "Evolve better senses on all of your spiders.\n" +
+							"Increases spider FPC by 1%",
+						"costType": "food",
+						"initCost": 10000,
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[2]
+						"id": "evo_spinnerets",
+						"title": "Spinnerets",
+						"description": "Learn how to use those spinnerets!\n" +
+							"Increases Exp.S FPC by 1 + Unlocks Broken Webs",
+						"costType": "food",
+						"initCost": 200,
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[3]
+						"id": "evo_webPlacement",
+						"title": "Web placement",
+						"description": "Get better at picking locations for webs.\n" +
+							"Increases web FPS by 1%",
+						"costType": "food",
+						"initCost": 10000,
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[4]
+						"id": "evo_stickyWebs",
+						"title": "Sticky webs",
+						"description": "Start producing sticky fluids on all of your webs.\n" +
+							"Increases web FPS by 1%",
+						"costType": "food",
+						"initCost": 30000,
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[5]
+						"id": "evo_softerSilk",
+						"title": "Softer silk",
+						"description": "Soft silk inside the nest keeps spiderlings happy!\n" +
+							"Increases nest SPS by 1%",
+						"costType": "food",
+						"initCost": 30000,
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[6]
+						"id": "evo_nightVision",
+						"title": "Night vision",
+						"description": "Hunting at night is great, but it gets better with sight!\n" +
+							"Increase Exp.S FPC by 2 + Unlocks Wolf Spiders",
+						"requirement": function () {
+							return false;
+						}
+					},
+					{// evolutionUpg[0].items[7]
+						"id": "evo_hydrophobicHairs",
+						"title": "Hydrophobic hairs",
+						"description": "These hairs allow spiders to walk on water and even survive beneath the surface.\n" +
+							"Increase Exp.S FPC by 3 + Unlocks Fishing Spiders",
+						"requirement": function () {
+							return false;
+						}
+					}
+				]
 			}
 		];
 

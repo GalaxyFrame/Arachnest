@@ -1,12 +1,16 @@
 ARACHNEST.factory("functionFactory", [
 	function () {
 		var me = {};
+
+		//Iterates through all of the items in an array/object (as obj) and calls a provided function containing the array.
 		me.iterateObjectArray = function (obj, externalFunction) {
 			obj.arrayLength = obj.objValue.items.length;
 			while (obj.arrayLength--) {
 				externalFunction(obj);
 			}
 		};
+		
+		//Iterates through all fo the items in an array/object (as obj) and calls a provided function containing the array as well as a function.
 		me.iterateObject = function (externalFunction, collection, obj, passedFunction) {
 			angular.forEach(collection, function (objectValue, objectName) {
 				obj.objValue = objectValue;
@@ -29,29 +33,6 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "collectionFactory", "statF
 		game.initializeItem = function (upgrade) {
 			game.initializeCost(upgrade);
 			upgrade.power = 1;
-		};
-
-		// Define how upgrade requirements are met
-		game.upgRequirement = function (requirement) {
-			var requireCompare,
-				requireTarget,
-				requireValue;
-			if (requirement === "none") {
-				return true;
-			} else {
-				requireCompare = requirement.comparison;
-				requireTarget = requirement.target;
-				requireValue = requirement.value;
-				if (requireCompare === "equal") {
-					return requireTarget === requireValue;
-				} else if (requireCompare === "least") {
-					return requireTarget >= requireValue;
-				} else if (requireCompare === "greater") {
-					return requireTarget > requireValue;
-				} else if (requireCompare === "lesser") {
-					return requireTarget < requireValue;
-				}
-			}
 		};
 
 		// Calculate the base rate at which a resource is gathered.
@@ -108,13 +89,6 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "collectionFactory", "statF
 		game.buyBroodUpg = function (upgrade) {
 			var costCalc = Math.pow(2, Math.pow(upgrade.owned + 10, 0.5) - Math.pow(10, 0.5));
 			upgrade.cost = Math.ceil(upgrade.initCost * costCalc);
-		};
-
-		// Apply Evolution upgrade.
-		game.evolutionBonus = function (upgrade, target, value) {
-			if (upgrade.owned === 1) {
-				target += value;
-			}
 		};
 
 		// Buy an upgrade.

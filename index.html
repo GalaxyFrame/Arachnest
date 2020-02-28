@@ -77,9 +77,9 @@
 
 				<div class="list-group">
 					<a class="list-group-item clearfix"
-					   data-ng-repeat="evo in evolutionUpg"
+					   data-ng-repeat="evo in evolutionUpg[0].items"
 					   data-ng-show="evo.requirement()"
-						 data-ng-click="buyUpgrade(evo, evo.costType)"
+						 data-ng-click="buyUpgrade(evo, evo.costType, evo.evolve)"
 						 data-ng-mouseenter="upgTooltip('#evolutionDescription', evo)"
 						 data-ng-mouseleave="hideTooltip('#evolutionDescription')">
 						<p class="tText list-group-item-text" data-ng-bind="evo.title"></p>
