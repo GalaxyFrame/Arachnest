@@ -74,7 +74,7 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"initCost": 100,
 						"add": {"fps": 1},
 						"requirement": function () {
-							return false;
+							return collection.broodUpg[0].items[1].owned >= 1;
 						}
 					},
 					{// 1.1
@@ -101,7 +101,7 @@ ARACHNEST.factory("collectionFactory", ["statFactory",
 						"initCost": 1000000,
 						"add": { "sps": 1 },
 						"requirement": function () {
-							return true;
+							return false;
 						}
 					},
 					{// 2.1
