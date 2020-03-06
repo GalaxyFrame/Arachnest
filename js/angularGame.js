@@ -1,16 +1,13 @@
+// Factory for functions which don't rely on other factories
+// Functions which can be used "universally"
 ARACHNEST.factory("functionFactory", [
 	function () {
 		var me = {};
 
-		//Iterates through all of the items in an array/object (as obj) and calls a provided function containing the array.
-		me.iterateObjectArray = function (obj, passedFunction) {
-			obj.arrayLength = obj.objValue.items.length;
-			while (obj.arrayLength--) {
-				passedFunction(obj);
-			}
-		};
-		
-		//Iterates through all fo the items in an array/object (as obj) and calls a provided function containing the array as well as a function.
+		// Iterates through all of the items in an array/object (as obj)
+		// Each iteration of an item passes the name & value of the item into an external object
+		// An external function is then called, the object's name & value are passed to the external function
+		// additionally a function may be passed through the external function if defined
 		me.iterateObject = function (externalFunction, collection, obj, passedFunction) {
 			angular.forEach(collection, function (objectValue, objectName) {
 				obj.objValue = objectValue;
@@ -18,18 +15,32 @@ ARACHNEST.factory("functionFactory", [
 				externalFunction(obj, passedFunction);
 			});
 		};
+
+		// Iterates through all of the items in an array/object (as obj) and calls an external function containing the array
+		me.iterateObjectArray = function (obj, externalFunction) {
+			obj.arrayLength = obj.objValue.items.length;
+			while (obj.arrayLength--) {
+				externalFunction(obj);
+			}
+		};
 		return me;
 	}
 ]);
 
+
+// Factory for putting the game together
+// This is where we bring everything together to make it work
 ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionFactory",
 	function (functionFactory, statFactory, collectionFactory) {
 		var game = {};
 
+		// Set the default cost of an upgrade
 		game.initializeCost = function (upgrade) {
 			upgrade.cost = upgrade.initCost;
 			upgrade.owned = 0;
 		};
+
+		// Set the default values for an upgrade
 		game.initializeItem = function (upgrade) {
 			game.initializeCost(upgrade);
 			upgrade.power = 1
@@ -107,6 +118,8 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 	}
 ]);
 
+// Factory for styling the game
+// This is where we define how information is displayed to the user
 ARACHNEST.factory("styleFactory", ["functionFactory",
 	function (functionFactory) {
 		var me = {};
@@ -127,7 +140,8 @@ ARACHNEST.factory("styleFactory", ["functionFactory",
 	}
 ]);
 
-//Set the stage, this is what gets passed to the main page
+// Controller for the game
+// Set the stage, this is what gets passed to the main page
 ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory", "gameFactory", "statFactory", "$localstorage",
 	function ($scope, $interval, collectionFactory, gameFactory, statFactory, $localstorage) {
 
@@ -135,6 +149,8 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 		loadUpgrades = function (obj) {
 			var upgradeItem = obj.objValue.items[obj.arrayLength];
 			var upgItemFromStorage = $localstorage.getObject(obj.collectName)[obj.objName].items[obj.arrayLength];
+
+			// We only want to transfer the data we need, the game can calculate everything else based on these values
 			upgradeItem.owned = upgItemFromStorage.owned;
 			upgradeItem.cost = upgItemFromStorage.cost;
 			if (obj.collectName == "broodUpg") {
@@ -146,52 +162,62 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 				}
 			}
 		}
-		resetItems = function (obj) {
+
+		// Function for loading default values
+		resetItem = function (obj) {
 			var upgradeItem = obj.objValue.items[obj.arrayLength];
 			gameFactory.initializeItem(upgradeItem);
 
 		}
+
+		// Load game progress if it exists, otherwise load default values
 		loadGame = function () {
 			var obj = {};
-			// Load Brood Upgrades
-			if ($localstorage.getObject('broodUpg')) {
-				gameFactory.iterateUpgrades("broodUpg", obj, loadUpgrades);
-			} else {
-				gameFactory.iterateUpgrades("broodUpg", obj, resetItems);
-				$localstorage.setObject('broodUpg', collectionFactory.broodUpg);
-				alert("no save found for Brood Upgrades");
+			// Load upgrades by collection
+			loadCollection = function (collectionName) {
+				if ($localstorage.getObject(collectionName)) {
+					gameFactory.iterateUpgrades(collectionName, obj, loadUpgrades);
+				} else {
+					gameFactory.iterateUpgrades(collectionName, obj, resetItem);
+					$localstorage.setObject(collectionName, collectionFactory[collectionName]);
+				}
 			}
-			// Load Evolution Upgrades
-			if ($localstorage.getObject('evolutionUpg')) {
-				gameFactory.iterateUpgrades("evolutionUpg", obj, loadUpgrades);
-			} else {
-				gameFactory.iterateUpgrades("evolutionUpg", obj, resetItems);
-				$localstorage.setObject('evolutionUpg', collectionFactory.evolutionUpg);
-			}
+			loadCollection('broodUpg');
+			loadCollection('evolutionUpg');
 			// Load stats
 			if ($localstorage.getObject('stats')) {
 				statFactory.clicks = $localstorage.getObject('stats').clicks;
 				statFactory.resources.food = $localstorage.getObject('stats').resources.food;
+			} else {
+				statFactory.clicks = 0;
+				statFactory.resources.food = 0;
+				$localstorage.setObject('stats', statFactory);
 			}
 		}
 		loadGame();
 		// END LOAD \\-------------------------
 
+		// Make the collections accessable from the stage by passing them to $scope
 		$scope.broodUpg = collectionFactory.broodUpg;
 		$scope.evolutionUpg = collectionFactory.evolutionUpg;
 
+		// Function for saving game progress
 		saveGame = function () {
 			$localstorage.setObject('broodUpg', collectionFactory.broodUpg);
 			$localstorage.setObject('evolutionUpg', collectionFactory.evolutionUpg);
 			$localstorage.setObject('stats', statFactory);
 		}
+		$scope.saveGame = saveGame;
+
+		// Function for resetting game progress
 		resetGame = function () {
 			$localstorage.remove('broodUpg');
 			$localstorage.remove('evolutionUpg');
+			$localstorage.remove('stats');
 			$localstorage.clear();
+			loadGame();
 			alert("Game reset!");
 		}
-		$scope.saveGame = saveGame;
 		$scope.resetGame = resetGame;
 
 		$scope.initializeCost = gameFactory.initializeCost;
