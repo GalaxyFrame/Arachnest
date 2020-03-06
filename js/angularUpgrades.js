@@ -1,11 +1,11 @@
-ARACHNEST.factory("collectionFactory", ["statFactory",
+ARACHNEST.factory("collectionFactory", [
 	function () {
 		var collection = {};
 		collection.broodUpg = [ // Brood Upgrades
 			{ // 0
 				"id": "Spider",
 				"items": [
-					{// 0.0
+					{// broodUpg[0].items[0]
 						"id": "brood_grassSpider",
 						"title": "Grass spider",
 						"description": "These small spiders wander around in search of food.",

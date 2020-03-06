@@ -1,7 +1,7 @@
 ﻿<!doctype html>
 <html data-ng-app="Arachnest">
 <head>
-	<meta charset="utf-8"/>
+	<meta charset="utf-8" />
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Game</title>
@@ -11,10 +11,10 @@
 	<script src="./js/library/jquery-ui-1.10.4.custom.min.js"></script>
 	<script src="./js/library/jquery.tooltipster.min.js"></script>
 	<script src="./js/library/base64.js"></script>
-	<link rel="stylesheet" href="./css/jquery-ui-1.10.4.custom.min.css"/>
-	<link rel="stylesheet" href="./css/tooltipster.css"/>
-	<link rel="stylesheet" href="./css/bootstrap.min.css"/>
-	<link rel="stylesheet" href="./css/theme.css"/>
+	<link rel="stylesheet" href="./css/jquery-ui-1.10.4.custom.min.css" />
+	<link rel="stylesheet" href="./css/tooltipster.css" />
+	<link rel="stylesheet" href="./css/bootstrap.min.css" />
+	<link rel="stylesheet" href="./css/theme.css" />
 </head>
 <body>
 <div id="wrapper" data-ng-controller="gameControl">
@@ -31,8 +31,8 @@
 					SPS: <span data-ng-bind="recalcRate('sps')"></span>
 				</div>
 			</div>
-			<button id="resetButton" class="btn navbar-btn navbar-right tooltipBot">Reset</button>
-			<button id="saveButton" class="btn navbar-btn navbar-right tooltipBot">Save</button>
+			<button id="resetButton" class="btn navbar-btn navbar-right tooltipBot" data-ng-click="resetGame()">Reset</button>
+			<button id="saveButton" class="btn navbar-btn navbar-right tooltipBot" data-ng-click="saveGame()">Save</button>
 			<div id="saveResult" class="navbar-text navbar-right"></div>
 		</div>
 	</div>
@@ -62,7 +62,7 @@
 							   data-ng-mouseleave="hideTooltip('#broodDescription')"
 							   id="{{ upg.id }}">
 								<p class="tText list-group-item-text" data-ng-bind="upg.title"></p>
-								<span class="cText list-group-item-text" data-ng-init="initializeItem(upg)">
+								<span class="cText list-group-item-text">
 									cost: <span data-ng-bind="upg.cost"></span>
 								</span>
 								<span class="oText list-group-item-text pull-right" data-ng-bind="upg.owned"></span>
@@ -83,7 +83,7 @@
 						 data-ng-mouseenter="upgTooltip('#evolutionDescription', evo)"
 						 data-ng-mouseleave="hideTooltip('#evolutionDescription')">
 						<p class="tText list-group-item-text" data-ng-bind="evo.title"></p>
-						<span class="cText list-group-item-text" data-ng-init="initializeCost(evo)">
+						<span class="cText list-group-item-text">
 							cost: <span data-ng-bind="evo.cost"></span>
 						</span>
 					</a>
@@ -100,6 +100,7 @@
 </div>
 <script src="./js/angularStart.js"></script>
 <script src="./js/angularUpgrades.js"></script>
+<script src="./js/angularSaveLoad.js"></script>
 <script src="./js/angularGame.js"></script>
 <script src="./js/angularStyle.js"></script>
 </body>
