@@ -1,3 +1,11 @@
+// //--------------------------------------------------\\
+// ||-----> ARACHNEST <--------------------------------||
+// ||-----> By Chris Farral <--------------------------||
+// ||--------------------------------------------------||
+// ||-----> Main Game functionality <------------------||
+// \\--------------------------------------------------//
+
+
 // Factory for functions which don't rely on other factories
 // Functions which can be used "universally"
 ARACHNEST.factory("functionFactory", [
@@ -5,11 +13,9 @@ ARACHNEST.factory("functionFactory", [
 		var me = {};
 
 		// Iterates through all of the items in an array/object (as obj)
-		// Each iteration of an item passes the name & value of the item into an external object
-		// An external function is then called, the object's name & value are passed to the external function
-		// additionally a function may be passed through the external function if defined
 		me.iterateObject = function (externalFunction, collection, obj, passedFunction) {
 			angular.forEach(collection, function (objectValue, objectName) {
+				// An external function is then called, the object's name & value are passed to the external function
 				obj.objValue = objectValue;
 				obj.objName = objectName;
 				externalFunction(obj, passedFunction);
@@ -50,11 +56,11 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 		game.getAddRate = function (obj) {
 			var upgrade = obj.objValue.items[obj.arrayLength],
 				upgradeOwned = upgrade.owned,
-				upgradeAdd = upgrade.add,
 				rateType = obj.rateType;
+				upgradeAdd = upgrade.add
 			if (upgradeOwned > 0) {
 				if (upgradeAdd.hasOwnProperty(rateType)) {
-					obj.rateAdd += (upgradeAdd[rateType] * upgradeOwned) * upgrade.power;
+					obj.rateAdd += (upgradeAdd[rateType].value * upgradeOwned) * upgrade.power;
 				}
 			}
 		};
@@ -124,7 +130,7 @@ ARACHNEST.factory("styleFactory", ["functionFactory",
 	function (functionFactory) {
 		var me = {};
 		me.addText = function (obj) {
-			obj.updText += obj.objName.toUpperCase() + ": +" + obj.objValue + " ";
+			obj.updText += obj.objName.toUpperCase() + ": +" + obj.objValue.value + " ";
 		};
 		me.updateText = function (externalFunction, collection, passedFunction) {
 			var obj = {};

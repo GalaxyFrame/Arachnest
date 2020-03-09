@@ -1,3 +1,10 @@
+// //--------------------------------------------------\\
+// ||-----> ARACHNEST <--------------------------------||
+// ||-----> By Chris Farral <--------------------------||
+// ||--------------------------------------------------||
+// ||-----> Upgrade definitions <----------------------||
+// \\--------------------------------------------------//
+
 ARACHNEST.factory("collectionFactory", [
 	function () {
 		var collection = {};
@@ -11,7 +18,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "These small spiders wander around in search of food.",
 						"costType": "food",
 						"initCost": 10,
-						"add": {"fpc": 1},
+						"add": {
+							"fpc": { "value": 1 }
+						},
 						"requirement": function () {
 							return true;
 						}
@@ -22,7 +31,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "These small spiders have poor eyesight, but they make up for it by using webs.",
 						"costType": "food",
 						"initCost": 25,
-						"add": {"fpc": 1},
+						"add": {
+							"fpc": { "value": 1 }
+						},
 						"requirement": function () {
 							return true;
 						}
@@ -33,7 +44,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "These small spiders ambush their prey by blending into their surroundings.",
 						"costType": "food",
 						"initCost": 50,
-						"add": {"fpc": 5},
+						"add": {
+							"fpc": { "value": 5 }
+						},
 						"requirement": function () {
 							return collection.broodUpg[0].items[0].owned >= 1;
 						}
@@ -44,7 +57,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "These spiders have great eyesight and can even hunt at night.",
 						"costType": "food",
 						"initCost": 100,
-						"add": {"fpc": 10},
+						"add": {
+							"fpc": { "value": 10 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -56,7 +71,9 @@ ARACHNEST.factory("collectionFactory", [
 							" bodies of water. They not only hunt near the water, but they can hunt ON the water.",
 						"costType": "food",
 						"initCost": 200,
-						"add": { "fpc": 20 },
+						"add": {
+							"fpc": { "value": 20 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -72,7 +89,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "This web is broken, but it works.",
 						"costType": "food",
 						"initCost": 100,
-						"add": {"fps": 1},
+						"add": {
+							"fps": { "value": 1 }
+						},
 						"requirement": function () {
 							return collection.broodUpg[0].items[1].owned >= 1;
 						}
@@ -83,7 +102,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "It's weak, but at least it's not broken.",
 						"costType": "food",
 						"initCost": 200,
-						"add": { "fps": 2 },
+						"add": {
+							"fps": { "value": 2 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -99,9 +120,14 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "Security and nutrients. Silk is important.",
 						"costType": "food",
 						"initCost": 1000000,
-						"add": { "sps": 1 },
+						"add": {
+							"sps": {
+								"target": function () { return collection.broodUpg[1].items[0]; },
+								"value": 1
+							}
+						},
 						"requirement": function () {
-							return false;
+							return collection.broodUpg[1].items[0].owned >= 1;
 						}
 					},
 					{// 2.1
@@ -110,7 +136,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "This silk is enhanced with special proteins.",
 						"costType": "food",
 						"initCost": 10000000,
-						"add": { "sps": 5 },
+						"add": {
+							"sps": { "value": 5 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -121,7 +149,9 @@ ARACHNEST.factory("collectionFactory", [
 						"description": "This silk is rich with strength and elasticity. It's also healthy to eat!",
 						"costType": "food",
 						"initCost": 50000000,
-						"add": { "sps": 20 },
+						"add": {
+							"sps": { "value": 20 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -133,7 +163,9 @@ ARACHNEST.factory("collectionFactory", [
 							"providing it with protection",
 						"costType": "food",
 						"initCost": 100000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -145,7 +177,9 @@ ARACHNEST.factory("collectionFactory", [
 							"allow a stream of food to flow directly to each spiderling",
 						"costType": "food",
 						"initCost": 200000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -157,7 +191,9 @@ ARACHNEST.factory("collectionFactory", [
 							"This allows your nest to move!",
 						"costType": "food",
 						"initCost": 500000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -169,7 +205,9 @@ ARACHNEST.factory("collectionFactory", [
 							"Not only does it provide further security, but it can be moved with the muscular threads!",
 						"costType": "food",
 						"initCost": 650000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -181,7 +219,9 @@ ARACHNEST.factory("collectionFactory", [
 							"It allows your spiderlings to effectively communicate with one another",
 						"costType": "food",
 						"initCost": 800000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -193,7 +233,9 @@ ARACHNEST.factory("collectionFactory", [
 							"react so well that the nest itself is essentially alive",
 						"costType": "food",
 						"initCost": 1000000000,
-						"add": { "sps": 1000 },
+						"add": {
+							"sps": { "value": 1000 }
+						},
 						"requirement": function () {
 							return false;
 						}
@@ -213,7 +255,7 @@ ARACHNEST.factory("collectionFactory", [
 						"costType": "food",
 						"initCost": 100,
 						"evolve": function () {
-							collection.broodUpg[0].items[0].add.fpc += 1;
+							collection.broodUpg[0].items[0].add.fpc.value += 1;
 						},
 						"requirement": function () {
 							//At least one grass spider owned and this upgrade not already purchased
