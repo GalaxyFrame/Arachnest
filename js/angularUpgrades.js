@@ -5,9 +5,21 @@
 // ||-----> Upgrade definitions <----------------------||
 // \\--------------------------------------------------//
 
-ARACHNEST.factory("collectionFactory", [
+ARACHNEST.factory("collectionFunction", [
 	function () {
+		return {
+			"itemByID": function (upgID, upgrades) {
+				return upgrades.find(upg => upg.id === upgID);
+			}
+		}
+	}
+]);
+
+
+ARACHNEST.factory("collectionFactory", ["collectionFunction",
+	function (collectionFunction) {
 		var collection = {};
+		var byID = collectionFunction.itemByID;
 		collection.broodUpg = [ // Brood Upgrades
 			{ // 0
 				"id": "Spider",
@@ -48,7 +60,7 @@ ARACHNEST.factory("collectionFactory", [
 							"fpc": { "value": 5 }
 						},
 						"requirement": function () {
-							return collection.broodUpg[0].items[0].owned >= 1;
+							return byID("evo_spiderCamo", collection.evolutionUpg[0].items).owned >= 1;
 						}
 					},
 					{// 0.3
@@ -119,11 +131,13 @@ ARACHNEST.factory("collectionFactory", [
 						"title": "Normal silk",
 						"description": "Security and nutrients. Silk is important.",
 						"costType": "food",
-						"initCost": 1000000,
+						"initCost": 1000,
 						"add": {
 							"sps": {
-								"target": function () { return collection.broodUpg[1].items[0]; },
-								"value": 1
+								"value": 1,
+								"target": function () {
+									return collection.broodUpg[0].items[1];
+								}
 							}
 						},
 						"requirement": function () {

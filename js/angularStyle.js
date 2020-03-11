@@ -50,3 +50,25 @@ ARACHNEST.controller("styleController", ["$scope", "styleFactory",
 		};
 	}
 ]);
+
+// Factory for styling the game
+// This is where we define how information is displayed to the user
+ARACHNEST.factory("styleFactory", ["functionFactory",
+	function (functionFactory) {
+		var me = {};
+		me.addText = function (obj) {
+			obj.updText += obj.objName.toUpperCase() + ": +" + obj.objValue.value + " ";
+		};
+		me.updateText = function (externalFunction, collection, passedFunction) {
+			var obj = {};
+			obj.updText = "";
+			externalFunction(passedFunction, collection, obj);
+			return obj.updText;
+		};
+		me.getAddRateText = function (collection) {
+			var addRates = me.updateText(functionFactory.iterateObject, collection.add, me.addText);
+			return collection.description + "\n" + addRates;
+		};
+		return me;
+	}
+]);

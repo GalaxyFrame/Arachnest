@@ -36,8 +36,8 @@ ARACHNEST.factory("functionFactory", [
 
 // Factory for putting the game together
 // This is where we bring everything together to make it work
-ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionFactory",
-	function (functionFactory, statFactory, collectionFactory) {
+ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionFactory", "$interval",
+	function (functionFactory, statFactory, collectionFactory, $interval) {
 		var game = {};
 
 		// Set the default cost of an upgrade
@@ -52,25 +52,44 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 			upgrade.power = 1
 		};
 
-		// Calculate the base rate at which a resource is gathered.
-		game.getAddRate = function (obj) {
-			var upgrade = obj.objValue.items[obj.arrayLength],
-				upgradeOwned = upgrade.owned,
-				rateType = obj.rateType;
-				upgradeAdd = upgrade.add
-			if (upgradeOwned > 0) {
-				if (upgradeAdd.hasOwnProperty(rateType)) {
-					obj.rateAdd += (upgradeAdd[rateType].value * upgradeOwned) * upgrade.power;
-				}
-			}
+		game.startInterval = function (externalFunction) {
+			$interval(externalFunction, 1000);
 		};
-
 
 		// Iterate through all of the upgrades in a collection and execute a function on each iteration.
 		game.iterateUpgrades = function (collectionName, obj, externalFunction) {
 			collection = collectionFactory[collectionName];
 			obj.collectName = collectionName;
 			functionFactory.iterateObject(functionFactory.iterateObjectArray, collection, obj, externalFunction);
+		};
+
+		// Brood Nest upgrade
+		game.nestUpgrade = function (upgrade) {
+			upgrade.add.sps.target().owned += upgrade.add.sps.value * upgrade.owned;
+		}
+
+		// Calculate the base rate at which a resource is gathered.
+		game.getAddRate = function (obj) {
+			var upgrade = obj.objValue.items[obj.arrayLength],
+				upgradeOwned = upgrade.owned,
+				rateType = obj.rateType;
+			upgradeAdd = upgrade.add
+			if (upgradeOwned > 0) {
+				if (upgradeAdd.hasOwnProperty(rateType)) {
+					obj.rateAdd += (upgradeAdd[rateType].value * upgradeOwned) * upgrade.power;
+					// Check if the upgrade is a nest upgrade
+					if (rateType == "sps") {
+						// Check if the nest upgrade isn't already being applied
+						if (upgradeAdd.intStarted != true) {
+							// If the nest upgrade isn't being applied already, apply it
+							game.startInterval(function () {
+								game.nestUpgrade(upgrade);
+							});
+							upgradeAdd.intStarted = true;
+						}
+					}
+				}
+			}
 		};
 
 		// Update a resource rate.
@@ -116,115 +135,26 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 			if (statFactory.resources[myResource] >= upgrade.cost) {
 				statFactory.resources[myResource] -= upgrade.cost;
 				upgrade.owned += 1;
-
 				externalFunction(upgrade);
 			}
 		};
-		return game;
-	}
-]);
 
-// Factory for styling the game
-// This is where we define how information is displayed to the user
-ARACHNEST.factory("styleFactory", ["functionFactory",
-	function (functionFactory) {
-		var me = {};
-		me.addText = function (obj) {
-			obj.updText += obj.objName.toUpperCase() + ": +" + obj.objValue.value + " ";
-		};
-		me.updateText = function (externalFunction, collection, passedFunction) {
-			var obj = {};
-			obj.updText = "";
-			externalFunction(passedFunction, collection, obj);
-			return obj.updText;
-		};
-		me.getAddRateText = function (collection) {
-			var addRates = me.updateText(functionFactory.iterateObject, collection.add, me.addText);
-			return collection.description + "\n" + addRates;
-		};
-		return me;
+		return game;
 	}
 ]);
 
 // Controller for the game
 // Set the stage, this is what gets passed to the main page
-ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory", "gameFactory", "statFactory", "$localstorage",
-	function ($scope, $interval, collectionFactory, gameFactory, statFactory, $localstorage) {
-
-		// --- LOAD GAME -- \\-----------------------
-		loadUpgrades = function (obj) {
-			var upgradeItem = obj.objValue.items[obj.arrayLength];
-			var upgItemFromStorage = $localstorage.getObject(obj.collectName)[obj.objName].items[obj.arrayLength];
-
-			// We only want to transfer the data we need, the game can calculate everything else based on these values
-			upgradeItem.owned = upgItemFromStorage.owned;
-			upgradeItem.cost = upgItemFromStorage.cost;
-			if (obj.collectName == "broodUpg") {
-				upgradeItem.power = upgItemFromStorage.power;
-			} else if (obj.collectName == "evolutionUpg") {
-				// If Evolution Upgrade is owned, apply its bonus
-				if (upgradeItem.owned >= 1) {
-					upgradeItem.evolve();
-				}
-			}
-		}
-
-		// Function for loading default values
-		resetItem = function (obj) {
-			var upgradeItem = obj.objValue.items[obj.arrayLength];
-			gameFactory.initializeItem(upgradeItem);
-
-		}
-
-		// Load game progress if it exists, otherwise load default values
-		loadGame = function () {
-			var obj = {};
-			// Load upgrades by collection
-			loadCollection = function (collectionName) {
-				if ($localstorage.getObject(collectionName)) {
-					gameFactory.iterateUpgrades(collectionName, obj, loadUpgrades);
-				} else {
-					gameFactory.iterateUpgrades(collectionName, obj, resetItem);
-					$localstorage.setObject(collectionName, collectionFactory[collectionName]);
-				}
-			}
-			loadCollection('broodUpg');
-			loadCollection('evolutionUpg');
-			// Load stats
-			if ($localstorage.getObject('stats')) {
-				statFactory.clicks = $localstorage.getObject('stats').clicks;
-				statFactory.resources.food = $localstorage.getObject('stats').resources.food;
-			} else {
-				statFactory.clicks = 0;
-				statFactory.resources.food = 0;
-				$localstorage.setObject('stats', statFactory);
-			}
-		}
-		loadGame();
-		// END LOAD \\-------------------------
+ARACHNEST.controller("gameControl", ["$scope", "collectionFactory", "gameFactory", "saveLoad",
+	function ($scope, collectionFactory, gameFactory, saveLoad) {
 
 		// Make the collections accessable from the stage by passing them to $scope
 		$scope.broodUpg = collectionFactory.broodUpg;
 		$scope.evolutionUpg = collectionFactory.evolutionUpg;
 
-		// Function for saving game progress
-		saveGame = function () {
-			$localstorage.setObject('broodUpg', collectionFactory.broodUpg);
-			$localstorage.setObject('evolutionUpg', collectionFactory.evolutionUpg);
-			$localstorage.setObject('stats', statFactory);
-		}
-		$scope.saveGame = saveGame;
-
-		// Function for resetting game progress
-		resetGame = function () {
-			$localstorage.remove('broodUpg');
-			$localstorage.remove('evolutionUpg');
-			$localstorage.remove('stats');
-			$localstorage.clear();
-			loadGame();
-			alert("Game reset!");
-		}
-		$scope.resetGame = resetGame;
+		saveLoad.loadGame();
+		$scope.saveGame = saveLoad.saveGame;
+		$scope.resetGame = saveLoad.resetGame;
 
 		$scope.initializeCost = gameFactory.initializeCost;
 		$scope.initializeItem = gameFactory.initializeItem;
@@ -243,11 +173,10 @@ ARACHNEST.controller("gameControl", ["$scope", "$interval", "collectionFactory",
 		$scope.buyBroodUpg = gameFactory.buyBroodUpg;
 		$scope.buyUpgrade = gameFactory.buyUpgrade;
 
-		// Add resource every second (interval).
-		addInterval = function () {
+		// Add resources & save game every second.
+		gameFactory.startInterval(function () {
 			gameFactory.intervalAddResource('food', 'fps');
-			saveGame();
-		}
-		$interval(addInterval, 1000);
+			$scope.saveGame();
+		});
 	}
 ]);
