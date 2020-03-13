@@ -10,26 +10,30 @@
 // Functions which can be used "universally"
 ARACHNEST.factory("functionFactory", [
 	function () {
-		var me = {};
+		return {
+			// Iterates through all of the items in an array/object (as obj)
+			"iterateObject": function (externalFunction, collection, obj, passedFunction) {
+				angular.forEach(collection, function (objectValue, objectName) {
+					// An external function is then called, the object's name & value are passed to the external function
+					obj.objValue = objectValue;
+					obj.objName = objectName;
+					externalFunction(obj, passedFunction);
+				});
+			},
 
-		// Iterates through all of the items in an array/object (as obj)
-		me.iterateObject = function (externalFunction, collection, obj, passedFunction) {
-			angular.forEach(collection, function (objectValue, objectName) {
-				// An external function is then called, the object's name & value are passed to the external function
-				obj.objValue = objectValue;
-				obj.objName = objectName;
-				externalFunction(obj, passedFunction);
-			});
-		};
+			// Iterates through all of the items in an array/object (as obj) and calls an external function containing the array
+			"iterateObjectArray": function (obj, externalFunction) {
+				obj.arrayLength = obj.objValue.items.length;
+				while (obj.arrayLength--) {
+					externalFunction(obj);
+				}
+			},
 
-		// Iterates through all of the items in an array/object (as obj) and calls an external function containing the array
-		me.iterateObjectArray = function (obj, externalFunction) {
-			obj.arrayLength = obj.objValue.items.length;
-			while (obj.arrayLength--) {
-				externalFunction(obj);
+			// Get item by ID
+			"itemByID": function (upgID, upgrades) {
+				return upgrades.find(upg => upg.id === upgID);
 			}
-		};
-		return me;
+		}
 	}
 ]);
 
@@ -103,6 +107,24 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 			statFactory.increaseRate[rateType].total = Math.floor((rateInit + obj.rateAdd) * rateBonus);
 		};
 
+		// Calculate a stat toal.
+		game.getTotal = function (obj) {
+			var upgrade = obj.objValue.items[obj.arrayLength];
+			obj.statValue += upgrade.owned;
+		};
+
+		// Update a stat total.
+		game.recalcStatTotal = function (statType) {
+			var obj = {};
+			obj.statValue = 0;
+			if (statType == "spiders") {
+				obj.objValue = functionFactory.itemByID("Spider", collectionFactory.broodUpg);
+			}
+			functionFactory.iterateObjectArray(obj, game.getTotal);
+			statFactory.itemTotal[statType] = obj.statValue;
+			console.log(statFactory.itemTotal[statType]);
+		};
+
 		// Calculate the amount of resources to add when the user clicks a resource button.
 		game.clickAddResource = function (resource, rateType) {
 			statFactory.resources[resource] += statFactory.increaseRate[rateType].total * statFactory.clickMultiplier;
@@ -122,6 +144,12 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 		game.getRecalculateRate = function (rateType) {
 			game.recalculateRate(rateType);
 			return statFactory.increaseRate[rateType].total;
+		};
+
+		// Get a stat total (such as total spiders).
+		game.getRecalcStat = function (rateType) {
+			game.recalcStatTotal(rateType);
+			return statFactory.itemTotal[rateType];
 		};
 
 		// Buy a Brood upgrade.
@@ -158,9 +186,10 @@ ARACHNEST.controller("gameControl", ["$scope", "collectionFactory", "gameFactory
 
 		$scope.initializeCost = gameFactory.initializeCost;
 		$scope.initializeItem = gameFactory.initializeItem;
-		
+
 		// Return the calculated total rate at which a resource is gathered.
 		$scope.recalcRate = gameFactory.getRecalculateRate;
+		$scope.getRecalcStat = gameFactory.getRecalcStat;
 
 		// Add resource manually (clicking).
 		$scope.addClick = gameFactory.clickAddResource;

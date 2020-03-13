@@ -30,6 +30,9 @@
 				<div id="spsText" class="navbar-text">
 					SPS: <span data-ng-bind="recalcRate('sps')"></span>
 				</div>
+				<div id="totalSpiderText" class="navbar-text">
+					Total Spiders: <span data-ng-bind="getRecalcStat('spiders')"></span>
+				</div>
 			</div>
 			<button id="resetButton" class="btn navbar-btn navbar-right tooltipBot" data-ng-click="resetGame()">Reset</button>
 			<button id="saveButton" class="btn navbar-btn navbar-right tooltipBot" data-ng-click="saveGame()">Save</button>

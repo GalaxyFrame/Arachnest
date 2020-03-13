@@ -5,21 +5,10 @@
 // ||-----> Upgrade definitions <----------------------||
 // \\--------------------------------------------------//
 
-ARACHNEST.factory("collectionFunction", [
-	function () {
-		return {
-			"itemByID": function (upgID, upgrades) {
-				return upgrades.find(upg => upg.id === upgID);
-			}
-		}
-	}
-]);
-
-
-ARACHNEST.factory("collectionFactory", ["collectionFunction",
-	function (collectionFunction) {
+ARACHNEST.factory("collectionFactory", ["functionFactory",
+	function (functionFactory) {
 		var collection = {};
-		var byID = collectionFunction.itemByID;
+		var byID = functionFactory.itemByID;
 		collection.broodUpg = [ // Brood Upgrades
 			{ // 0
 				"id": "Spider",
@@ -356,12 +345,24 @@ ARACHNEST.factory("collectionFactory", ["collectionFunction",
 
 		collection.achievement = [ //Achievement
 			{// 0
-				"id": "achieve_motherSpider",
-				"title": "Mother of spiders.",
-				"description": "Spawned your first spider.",
-				"requirement": function () {
-					return collection.broodUpg[0].items[0].owned >= 1;
-				}
+				"items": [
+					{
+						"id": "achieve_motherSpider",
+						"title": "Mother of spiders.",
+						"description": "Spawned your first spider.",
+						"requirement": function () {
+							return byID("brood_grassSpider", collection.broodUpg[0].items).owned >= 1;
+						}
+					},
+					{
+						"id": "achieve_spiderQueen",
+						"title": "Queen of spiders.",
+						"description": "Spawned 100 spiders.",
+						"requirement": function () {
+							return byID("brood_grassSpider", collection.broodUpg[0].items).owned >= 1;
+						}
+					}
+				]
 			}
 		];
 		return collection;
