@@ -117,12 +117,9 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 		game.recalcStatTotal = function (statType) {
 			var obj = {};
 			obj.statValue = 0;
-			if (statType == "spiders") {
-				obj.objValue = functionFactory.itemByID("Spider", collectionFactory.broodUpg);
-			}
+			obj.objValue = functionFactory.itemByID(statType, collectionFactory.broodUpg);
 			functionFactory.iterateObjectArray(obj, game.getTotal);
 			statFactory.itemTotal[statType] = obj.statValue;
-			console.log(statFactory.itemTotal[statType]);
 		};
 
 		// Calculate the amount of resources to add when the user clicks a resource button.
@@ -179,6 +176,7 @@ ARACHNEST.controller("gameControl", ["$scope", "collectionFactory", "gameFactory
 		// Make the collections accessable from the stage by passing them to $scope
 		$scope.broodUpg = collectionFactory.broodUpg;
 		$scope.evolutionUpg = collectionFactory.evolutionUpg;
+		$scope.achievement = collectionFactory.achievement;
 
 		saveLoad.loadGame();
 		$scope.saveGame = saveLoad.saveGame;

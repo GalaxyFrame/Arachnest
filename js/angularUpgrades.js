@@ -5,8 +5,8 @@
 // ||-----> Upgrade definitions <----------------------||
 // \\--------------------------------------------------//
 
-ARACHNEST.factory("collectionFactory", ["functionFactory",
-	function (functionFactory) {
+ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
+	function (functionFactory, statFactory) {
 		var collection = {};
 		var byID = functionFactory.itemByID;
 		collection.broodUpg = [ // Brood Upgrades
@@ -348,18 +348,18 @@ ARACHNEST.factory("collectionFactory", ["functionFactory",
 				"items": [
 					{
 						"id": "achieve_motherSpider",
-						"title": "Mother of spiders.",
-						"description": "Spawned your first spider.",
+						"title": "Mother of spiders",
+						"description": "Spawned your first spider",
 						"requirement": function () {
 							return byID("brood_grassSpider", collection.broodUpg[0].items).owned >= 1;
 						}
 					},
 					{
 						"id": "achieve_spiderQueen",
-						"title": "Queen of spiders.",
-						"description": "Spawned 100 spiders.",
+						"title": "Queen of spiders",
+						"description": "Spawned 100 spiders",
 						"requirement": function () {
-							return byID("brood_grassSpider", collection.broodUpg[0].items).owned >= 1;
+							return statFactory.itemTotal.Spider >= 100;
 						}
 					}
 				]

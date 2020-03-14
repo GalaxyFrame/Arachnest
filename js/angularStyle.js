@@ -13,7 +13,7 @@
 		delay: 0,
 		speed: 0
 	});
-	$("#broodDescription, #evolutionDescription").tooltipster({
+	$("#broodDescription, #evolutionDescription, #achievementDescription").tooltipster({
 		theme: "tooltipster-spider",
 		position: "top",
 		autoClose: false,

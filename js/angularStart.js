@@ -14,8 +14,8 @@ ARACHNEST.factory("statFactory", [
 			"clickMultiplier": 1,
 			"intervalMultiplier": 1,
 			"itemTotal": {
-				"webs": 0,
-				"spiders": 0
+				"Web": 0,
+				"Spider": 0
 			},
 			"resources": {
 				"food": 0,

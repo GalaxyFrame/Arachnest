@@ -9,7 +9,6 @@ body {
 	background-color: #414141;
 	-webkit-touch-callout: none;
 	-webkit-user-select: none;
-	-khtml-user-select: none;
 	-moz-user-select: -moz-none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -132,9 +131,11 @@ a.list-group-item:hover {
 .achievement {
 	width: 63px;
 	height: 63px;
+	margin: 5px;
 	background-color: #FFF;
-	display: block;
+	display: inline-block;
 }
+
 @font-face {
 	font-family: 'sciflysans';
 	src: url(../fonts/sciflysans.ttf);
