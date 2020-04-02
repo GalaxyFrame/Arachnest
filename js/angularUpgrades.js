@@ -20,7 +20,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 10,
 						"add": {
-							"fpc": { "value": 1 }
+							"fpc": { "initValue": 1 }
 						},
 						"requirement": function () {
 							return true;
@@ -33,7 +33,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 25,
 						"add": {
-							"fpc": { "value": 1 }
+							"fpc": { "initValue": 1 }
 						},
 						"requirement": function () {
 							return true;
@@ -46,23 +46,36 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 50,
 						"add": {
-							"fpc": { "value": 5 }
+							"fpc": { "initValue": 5 }
 						},
 						"requirement": function () {
 							return byID("evo_spiderCamo", collection.evolutionUpg[0].items).owned >= 1;
 						}
 					},
-					{// 0.3
+					{
+						"id": "brood_jumpingSpider",
+						"title": "Jumping Spider",
+						"description": "These very mobile spiders intelligently stalk and pounce on their prey.",
+						"costType": "food",
+						"initCost": 100,
+						"add": {
+							"fpc": { "initValue": 50 }
+						},
+						"requirement": function () {
+							return true;
+						}
+					},
+					{
 						"id": "brood_wolfSpider",
 						"title": "Wolf spider",
 						"description": "These spiders have great eyesight and can even hunt at night.",
 						"costType": "food",
-						"initCost": 100,
+						"initCost": 300,
 						"add": {
-							"fpc": { "value": 10 }
+							"fpc": { "initValue": 10 }
 						},
 						"requirement": function () {
-							return false;
+							return true;
 						}
 					},
 					{
@@ -71,27 +84,132 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"description": "Similar to wolf spiders, however, these spiders are commonly found near" +
 							" bodies of water. They not only hunt near the water, but they can hunt ON the water.",
 						"costType": "food",
-						"initCost": 200,
+						"initCost": 500,
 						"add": {
-							"fpc": { "value": 20 }
+							"fpc": { "initValue": 20 }
+						},
+						"requirement": function () {
+							return true;
+						}
+					},
+					{
+						"id": "brood_meshWebWeaver",
+						"title": "Mesh Web Weaver",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_netCastingSpider",
+						"title": "Net Casting Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_assassinSpider",
+						"title": "Assassin Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_orbWeaver",
+						"title": "Orb Weaver",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_sacSpider",
+						"title": "Sac Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_conewebSpider",
+						"title": "Coneweb Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_divingBellSpider",
+						"title": "Diving Bell Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
+						},
+						"requirement": function () {
+							return false;
+						}
+					},
+					{
+						"id": "brood_divingBellSpider",
+						"title": "Diving Bell Spider",
+						"description": "Outdoor spiders with webs that are slightly more organized than cobweb spiders/weavers.",
+						"costType": "food",
+						"initCost": 1000,
+						"add": {
+							"fps": { "initValue": 10 }
 						},
 						"requirement": function () {
 							return false;
 						}
 					}
+
 				]
 			},
 			{ // 1
 				"id": "Web",
 				"items": [
 					{// 1.0
-						"id": "brood_brokenWeb",
-						"title": "Broken web",
-						"description": "This web is broken, but it works.",
+						"id": "brood_cobweb",
+						"title": "Cobweb",
+						"description": "Not very strong or organized but food manages to get tangled in it still.",
 						"costType": "food",
 						"initCost": 100,
 						"add": {
-							"fps": { "value": 1 }
+							"fps": { "initValue": 1 }
 						},
 						"requirement": function () {
 							return collection.broodUpg[0].items[1].owned >= 1;
@@ -99,12 +217,12 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 					},
 					{// 1.1
 						"id": "brood_weakWeb",
-						"title": "Weak web",
+						"title": "Weak cobweb",
 						"description": "It's weak, but at least it's not broken.",
 						"costType": "food",
 						"initCost": 200,
 						"add": {
-							"fps": { "value": 2 }
+							"fps": { "initValue": 2 }
 						},
 						"requirement": function () {
 							return false;
@@ -116,14 +234,14 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 				"id": "Nest",
 				"items": [
 					{// 2.0
-						"id": "brood_normalSilk",
+						"id": "brood_",
 						"title": "Normal silk",
 						"description": "Security and nutrients. Silk is important.",
 						"costType": "food",
 						"initCost": 1000,
 						"add": {
 							"sps": {
-								"value": 1,
+								"initValue": 1,
 								"target": function () {
 									return collection.broodUpg[0].items[1];
 								}
@@ -140,7 +258,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 10000000,
 						"add": {
-							"sps": { "value": 5 }
+							"sps": { "initValue": 5 }
 						},
 						"requirement": function () {
 							return false;
@@ -153,7 +271,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 50000000,
 						"add": {
-							"sps": { "value": 20 }
+							"sps": { "initValue": 20 }
 						},
 						"requirement": function () {
 							return false;
@@ -167,7 +285,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 100000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;
@@ -177,11 +295,11 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"id": "brood_vascularThread",
 						"title": "Vascular thread",
 						"description": "This thread is hollow and " +
-							"allow a stream of food to flow directly to each spiderling",
+							"allows a stream of food to flow directly to each spiderling",
 						"costType": "food",
 						"initCost": 200000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;
@@ -195,7 +313,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 500000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;
@@ -209,7 +327,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 650000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;
@@ -223,7 +341,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 800000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;
@@ -237,7 +355,7 @@ ARACHNEST.factory("collectionFactory", ["functionFactory", "statFactory",
 						"costType": "food",
 						"initCost": 1000000000,
 						"add": {
-							"sps": { "value": 1000 }
+							"sps": { "initValue": 1000 }
 						},
 						"requirement": function () {
 							return false;

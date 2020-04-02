@@ -29,8 +29,8 @@ ARACHNEST.factory('$localstorage', ['$window',
     }
 ]);
 
-ARACHNEST.factory("saveLoad", ["$localstorage", "gameFactory", "collectionFactory", "statFactory",
-	function ($localstorage, gameFactory, collectionFactory, statFactory) {
+ARACHNEST.factory("saveLoad", ["$localstorage", "gameFactory", "collectionFactory", "statFactory", "functionFactory",
+	function ($localstorage, gameFactory, collectionFactory, statFactory, functionFactory) {
 		var me = {};
 			// --- LOAD GAME -- \\-----------------------
 			me.loadUpgrades = function (obj) {
@@ -38,6 +38,9 @@ ARACHNEST.factory("saveLoad", ["$localstorage", "gameFactory", "collectionFactor
 				var upgItemFromStorage = $localstorage.getObject(obj.collectName)[obj.objName].items[obj.arrayLength];
 
 				// We only want to transfer the data we need, the game can calculate everything else based on these values
+
+				functionFactory.checkValue(upgradeItem);
+
 				upgradeItem.owned = upgItemFromStorage.owned;
 				upgradeItem.cost = upgItemFromStorage.cost;
 				if (obj.collectName == "broodUpg") {
@@ -52,10 +55,9 @@ ARACHNEST.factory("saveLoad", ["$localstorage", "gameFactory", "collectionFactor
 
 		// Function for loading default values
 		me.resetItem = function (obj) {
-				var upgradeItem = obj.objValue.items[obj.arrayLength];
-				gameFactory.initializeItem(upgradeItem);
-
-			}
+			var upgradeItem = obj.objValue.items[obj.arrayLength];
+			gameFactory.initializeItem(upgradeItem);
+		}
 
 		// Load game progress if it exists, otherwise load default values
 		me.loadGame = function () {

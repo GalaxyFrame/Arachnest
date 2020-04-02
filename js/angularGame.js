@@ -32,6 +32,23 @@ ARACHNEST.factory("functionFactory", [
 			// Get item by ID
 			"itemByID": function (upgID, upgrades) {
 				return upgrades.find(upg => upg.id === upgID);
+			},
+
+			"checkValue": function (upgrade) {
+				if (upgrade.hasOwnProperty("add")) {
+					var upgradeAdd = upgrade.add,
+						rateTypeArray = ["fpc", "fps", "sps"];
+					console.log("upgrade has property: Add");
+
+
+					for (i = 0; i < rateTypeArray.length; i++) {
+						var rateType = rateTypeArray[i];
+						if (upgradeAdd.hasOwnProperty(rateType)) {
+							console.log("Add has property: " + rateType);
+							upgradeAdd[rateType].value = upgradeAdd[rateType].initValue;
+						}
+                    }
+				}
 			}
 		}
 	}
@@ -54,6 +71,7 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 		game.initializeItem = function (upgrade) {
 			game.initializeCost(upgrade);
 			upgrade.power = 1
+			functionFactory.checkValue(upgrade);
 		};
 
 		game.startInterval = function (externalFunction) {
@@ -80,6 +98,9 @@ ARACHNEST.factory("gameFactory", ["functionFactory", "statFactory", "collectionF
 			upgradeAdd = upgrade.add
 			if (upgradeOwned > 0) {
 				if (upgradeAdd.hasOwnProperty(rateType)) {
+					if (!upgradeAdd[rateType].hasOwnProperty("value") || typeof upgradeAdd[rateType].value == "undefined") {
+						upgradeAdd[rateType].value = upgradeAdd[rateType].initValue;
+                    }
 					obj.rateAdd += (upgradeAdd[rateType].value * upgradeOwned) * upgrade.power;
 					// Check if the upgrade is a nest upgrade
 					if (rateType == "sps") {

@@ -8,6 +8,8 @@
 (function ($) {
 	$(".tooltipBot").tooltipster({
 		theme: "tooltipster-spider",
+		animation: "fade",
+		updateAnimation: null,
 		position: "bottom",
 		offsetY: 4,
 		delay: 0,
@@ -15,9 +17,12 @@
 	});
 	$("#broodDescription, #evolutionDescription, #achievementDescription").tooltipster({
 		theme: "tooltipster-spider",
+		animation: "fade",
+		updateAnimation: null,
 		position: "top",
 		autoClose: false,
 		onlyOne: true,
+		delay:0,
 		speed: 0
 	});
 	$("#saveButton").tooltipster("content", "Save your progress");

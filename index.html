@@ -5,15 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Game</title>
-    <script src="./js/library/jquery-2.1.1.min.js"></script>
+    <script src="./js/library/jquery/jquery-3.4.1.min.js"></script>
     <script src="./js/library/angular/angular.min.js"></script>
-    <script src="./js/library/ui-bootstrap-tpls-0.11.0.min.js"></script>
-    <script src="./js/library/jquery-ui-1.10.4.custom.min.js"></script>
-    <script src="./js/library/jquery.tooltipster.min.js"></script>
+    <script src="./js/library/bootstrap/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script src="./js/library/jquery/jquery-ui.min.js"></script>
+    <script src="./js/library/jquery/tooltipster.bundle.min.js"></script>
     <script src="./js/library/base64.js"></script>
-    <link rel="stylesheet" href="./css/jquery-ui-1.10.4.custom.min.css" />
-    <link rel="stylesheet" href="./css/tooltipster.css" />
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./css/jquery/jquery-ui.min.css" />
+    <link rel="stylesheet" href="./css/jquery/tooltipster.bundle.min.css" />
+    <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="./css/theme.css" />
 </head>
 <body>
@@ -48,9 +48,8 @@
         <div id="base" class="jumbotron">
             <div id="bigButton" class="container">
                 <div id="scoreContainer" class="text-center">
-                    Food
-                    <p id="foodResource" data-ng-bind="getResource('food')"></p>
-                    <button id="addFoodButton" class="btn" data-ng-click="addClick('food', 'fpc')">Gather</button>
+                    Food: <span id="foodResource" data-ng-bind="getResource('food')"></span>
+                    <p><button id="addFoodButton" class="btn" data-ng-click="addClick('food', 'fpc')">Gather</button></p>
                 </div>
             </div>
         </div>
@@ -59,10 +58,10 @@
                 <div id="broodUpCont" class="col-xs-8 col-sm-6 col-md-5 col-lg-4">
                     <div id="broodDescription"></div>
                     <h3 class="text-center upTitle">Brood</h3>
-                    <tabset justified="true">
-                        <tab data-ng-repeat="broodType in broodUpg"
-                             heading="{{ broodType.id }}"
+                    <uib-tabset justified="true">
+                        <uib-tab data-ng-repeat="broodType in broodUpg"
                              id="{{ broodType.id | lowercase }}Tab">
+                            <uib-tab-heading>{{ broodType.id }}</uib-tab-heading>
                             <div class="list-group">
                                 <a class="list-group-item clearfix"
                                    data-ng-repeat="upg in broodType.items"
@@ -78,8 +77,8 @@
                                     <span class="oText list-group-item-text pull-right" data-ng-bind="upg.owned"></span>
                                 </a>
                             </div>
-                        </tab>
-                    </tabset>
+                        </uib-tab>
+                    </uib-tabset>
                 </div>
                 <div id="upCont" class="col-xs-8 col-sm-6 col-md-5 col-lg-4">
                     <div id="evolutionDescription"></div>
